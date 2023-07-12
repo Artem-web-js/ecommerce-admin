@@ -1,39 +1,39 @@
-"use client"
+'use client';
 
-import React, { useState } from "react";
-import { Store } from "@prisma/client";
-import * as z from "zod";
-import { zodResolver } from "@hookform/resolvers/zod";
-import { useForm } from "react-hook-form";
-import { useParams, useRouter } from "next/navigation";
-import toast from "react-hot-toast";
-import axios from "axios";
+import React, { useState } from 'react';
+import { Store } from '@prisma/client';
+import * as z from 'zod';
+import { zodResolver } from '@hookform/resolvers/zod';
+import { useForm } from 'react-hook-form';
+import { useParams, useRouter } from 'next/navigation';
+import toast from 'react-hot-toast';
+import axios from 'axios';
 
-import { useOrigin } from "@/hooks/use-origin";
+import { useOrigin } from '@/hooks/use-origin';
 
-import { Trash } from "lucide-react";
+import { Trash } from 'lucide-react';
 
-import { Heading } from "@/components/ui/heading";
-import { Button } from "@/components/ui/button";
-import { Separator } from "@/components/ui/separator";
+import { Heading } from '@/components/ui/heading';
+import { Button } from '@/components/ui/button';
+import { Separator } from '@/components/ui/separator';
 import {
   Form,
   FormControl,
   FormField,
   FormItem,
   FormLabel,
-  FormMessage
-} from "@/components/ui/form";
-import { Input } from "@/components/ui/input";
-import { AlertModal } from "@/components/modals/alert-modal";
-import { ApiAlert } from "@/components/ui/api-alert";
+  FormMessage,
+} from '@/components/ui/form';
+import { Input } from '@/components/ui/input';
+import { AlertModal } from '@/components/modals/alert-modal';
+import { ApiAlert } from '@/components/ui/api-alert';
 
 interface SettingsFormProps {
-  initialData: Store
+  initialData: Store;
 }
 
 const formSchema = z.object({
-  name: z.string().min(1)
+  name: z.string().min(1),
 });
 
 type SettingsFormValues = z.infer<typeof formSchema>;
@@ -56,13 +56,13 @@ export const SettingsForm: React.FC<SettingsFormProps> = ({ initialData }) => {
       setLoading(true);
       await axios.patch(`/api/stores/${params.storeId}`, values);
       router.refresh();
-      toast.success("Store updated.")
+      toast.success('Store updated.');
     } catch (err) {
-      toast.error("Something went wrong");
+      toast.error('Something went wrong');
     } finally {
       setLoading(false);
     }
-  }
+  };
 
   const onDelete = async () => {
     try {
@@ -70,14 +70,14 @@ export const SettingsForm: React.FC<SettingsFormProps> = ({ initialData }) => {
       await axios.delete(`/api/stores/${params.storeId}`);
       router.refresh();
       router.push('/');
-      toast.success("Store deleted.");
+      toast.success('Store deleted.');
     } catch (e) {
-      toast.error("Make sure you removed all products and categories first.");
+      toast.error('Make sure you removed all products and categories first.');
     } finally {
       setLoading(false);
       setOpen(false);
     }
-  }
+  };
 
   return (
     <>
@@ -88,10 +88,7 @@ export const SettingsForm: React.FC<SettingsFormProps> = ({ initialData }) => {
         loading={loading}
       />
       <div className="flex items-center justify-between">
-        <Heading
-          title="Settings"
-          description="Manage store preferences"
-        />
+        <Heading title="Settings" description="Manage store preferences" />
         <Button
           disabled={loading}
           variant="destructive"
@@ -103,7 +100,10 @@ export const SettingsForm: React.FC<SettingsFormProps> = ({ initialData }) => {
       </div>
       <Separator />
       <Form {...form}>
-        <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-8 w-full">
+        <form
+          onSubmit={form.handleSubmit(onSubmit)}
+          className="space-y-8 w-full"
+        >
           <div className="grid grid-cols-3 gap-8">
             <FormField
               control={form.control}
@@ -111,7 +111,11 @@ export const SettingsForm: React.FC<SettingsFormProps> = ({ initialData }) => {
                 <FormItem>
                   <FormLabel>Name</FormLabel>
                   <FormControl>
-                    <Input disabled={loading} placeholder="Store name" {...field} />
+                    <Input
+                      disabled={loading}
+                      placeholder="Store name"
+                      {...field}
+                    />
                   </FormControl>
                   <FormMessage />
                 </FormItem>
@@ -132,4 +136,4 @@ export const SettingsForm: React.FC<SettingsFormProps> = ({ initialData }) => {
       />
     </>
   );
-}
+};

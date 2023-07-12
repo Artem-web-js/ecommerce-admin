@@ -1,10 +1,10 @@
-import React from "react";
-import { auth } from "@clerk/nextjs";
-import {redirect} from "next/navigation";
+import React from 'react';
+import { auth } from '@clerk/nextjs';
+import { redirect } from 'next/navigation';
 
-import prismadb from "@/lib/prismadb";
+import prismadb from '@/lib/prismadb';
 
-import { Navbar } from "@/components/navbar";
+import { Navbar } from '@/components/navbar';
 
 export default async function DashboardLayout({
   children,
@@ -23,7 +23,7 @@ export default async function DashboardLayout({
     where: {
       id: params.storeId,
       userId,
-    }
+    },
   });
 
   if (!store) {
@@ -36,4 +36,4 @@ export default async function DashboardLayout({
       {children}
     </>
   );
-};
+}

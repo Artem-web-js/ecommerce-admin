@@ -1,29 +1,29 @@
-"use client"
+'use client';
 
-import React, { useState } from "react";
-import { Color } from "@prisma/client";
-import * as z from "zod";
-import { zodResolver } from "@hookform/resolvers/zod";
-import { useForm } from "react-hook-form";
-import { useParams, useRouter } from "next/navigation";
-import toast from "react-hot-toast";
-import axios from "axios";
+import React, { useState } from 'react';
+import { Color } from '@prisma/client';
+import * as z from 'zod';
+import { zodResolver } from '@hookform/resolvers/zod';
+import { useForm } from 'react-hook-form';
+import { useParams, useRouter } from 'next/navigation';
+import toast from 'react-hot-toast';
+import axios from 'axios';
 
-import { Trash } from "lucide-react";
+import { Trash } from 'lucide-react';
 
-import { Heading } from "@/components/ui/heading";
-import { Button } from "@/components/ui/button";
-import { Separator } from "@/components/ui/separator";
+import { Heading } from '@/components/ui/heading';
+import { Button } from '@/components/ui/button';
+import { Separator } from '@/components/ui/separator';
 import {
   Form,
   FormControl,
   FormField,
   FormItem,
   FormLabel,
-  FormMessage
-} from "@/components/ui/form";
-import { Input } from "@/components/ui/input";
-import { AlertModal } from "@/components/modals/alert-modal";
+  FormMessage,
+} from '@/components/ui/form';
+import { Input } from '@/components/ui/input';
+import { AlertModal } from '@/components/modals/alert-modal';
 
 interface ColorFormProps {
   initialData: Color | null;
@@ -45,16 +45,16 @@ export const ColorForm: React.FC<ColorFormProps> = ({ initialData }) => {
   const [open, setOpen] = useState(false);
   const [loading, setLoading] = useState(false);
 
-  const title = initialData ? "Edit color" : "Create color";
-  const description = initialData ? "Edit a color" : "Add a new color";
-  const toastMessage = initialData ? "Color updated" : "Color created";
-  const action = initialData ? "Save changes" : "Create";
+  const title = initialData ? 'Edit color' : 'Create color';
+  const description = initialData ? 'Edit a color' : 'Add a new color';
+  const toastMessage = initialData ? 'Color updated' : 'Color created';
+  const action = initialData ? 'Save changes' : 'Create';
 
   const form = useForm<ColorFormValues>({
     resolver: zodResolver(formSchema),
     defaultValues: initialData || {
-      name: "",
-      value: "",
+      name: '',
+      value: '',
     },
   });
 
@@ -62,7 +62,10 @@ export const ColorForm: React.FC<ColorFormProps> = ({ initialData }) => {
     try {
       setLoading(true);
       if (initialData) {
-        await axios.patch(`/api/${params.storeId}/colors/${params.colorId}`, values);
+        await axios.patch(
+          `/api/${params.storeId}/colors/${params.colorId}`,
+          values,
+        );
       } else {
         await axios.post(`/api/${params.storeId}/colors`, values);
       }
@@ -70,11 +73,11 @@ export const ColorForm: React.FC<ColorFormProps> = ({ initialData }) => {
       router.push(`/${params.storeId}/colors`);
       toast.success(toastMessage);
     } catch (err) {
-      toast.error("Something went wrong");
+      toast.error('Something went wrong');
     } finally {
       setLoading(false);
     }
-  }
+  };
 
   const onDelete = async () => {
     try {
@@ -82,14 +85,14 @@ export const ColorForm: React.FC<ColorFormProps> = ({ initialData }) => {
       await axios.delete(`/api/${params.storeId}/colors/${params.colorId}`);
       router.refresh();
       router.push(`/${params.storeId}/colors`);
-      toast.success("Color deleted.");
+      toast.success('Color deleted.');
     } catch (e) {
-      toast.error("Make sure you removed all products using this color first.");
+      toast.error('Make sure you removed all products using this color first.');
     } finally {
       setLoading(false);
       setOpen(false);
     }
-  }
+  };
 
   return (
     <>
@@ -100,10 +103,7 @@ export const ColorForm: React.FC<ColorFormProps> = ({ initialData }) => {
         loading={loading}
       />
       <div className="flex items-center justify-between">
-        <Heading
-          title={title}
-          description={description}
-        />
+        <Heading title={title} description={description} />
         {initialData && (
           <Button
             disabled={loading}
@@ -111,13 +111,16 @@ export const ColorForm: React.FC<ColorFormProps> = ({ initialData }) => {
             size="sm"
             onClick={() => setOpen(true)}
           >
-            <Trash className="w-4 h-4"/>
+            <Trash className="w-4 h-4" />
           </Button>
         )}
       </div>
       <Separator />
       <Form {...form}>
-        <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-8 w-full">
+        <form
+          onSubmit={form.handleSubmit(onSubmit)}
+          className="space-y-8 w-full"
+        >
           <div className="grid grid-cols-3 gap-8">
             <FormField
               name="name"
@@ -126,7 +129,11 @@ export const ColorForm: React.FC<ColorFormProps> = ({ initialData }) => {
                 <FormItem>
                   <FormLabel>Name</FormLabel>
                   <FormControl>
-                    <Input disabled={loading} placeholder="Color name" {...field} />
+                    <Input
+                      disabled={loading}
+                      placeholder="Color name"
+                      {...field}
+                    />
                   </FormControl>
                   <FormMessage />
                 </FormItem>
@@ -140,7 +147,11 @@ export const ColorForm: React.FC<ColorFormProps> = ({ initialData }) => {
                   <FormLabel>Value</FormLabel>
                   <FormControl>
                     <div className="flex items-center gap-x-4">
-                      <Input disabled={loading} placeholder="Color value" {...field} />
+                      <Input
+                        disabled={loading}
+                        placeholder="Color value"
+                        {...field}
+                      />
                       <div
                         className="border p-4 rounded-full"
                         style={{ backgroundColor: field.value }}
@@ -159,4 +170,4 @@ export const ColorForm: React.FC<ColorFormProps> = ({ initialData }) => {
       </Form>
     </>
   );
-}
+};

@@ -1,10 +1,10 @@
-"use client"
+'use client';
 
-import React from "react";
-import { useParams } from "next/navigation";
+import React from 'react';
+import { useParams } from 'next/navigation';
 
-import { useOrigin } from "@/hooks/use-origin";
-import {ApiAlert} from "@/components/ui/api-alert";
+import { useOrigin } from '@/hooks/use-origin';
+import { ApiAlert } from '@/components/ui/api-alert';
 
 interface ApiListProps {
   entityName: string;

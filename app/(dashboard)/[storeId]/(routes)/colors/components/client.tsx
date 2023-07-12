@@ -1,16 +1,16 @@
-"use client"
+'use client';
 
-import { useParams, useRouter } from "next/navigation";
+import { useParams, useRouter } from 'next/navigation';
 
-import { Plus } from "lucide-react";
+import { Plus } from 'lucide-react';
 
-import { Heading } from "@/components/ui/heading";
-import { Button } from "@/components/ui/button";
-import { Separator } from "@/components/ui/separator";
-import { DataTable } from "@/components/ui/data-table";
-import { ApiList } from "@/components/ui/api-list";
+import { Heading } from '@/components/ui/heading';
+import { Button } from '@/components/ui/button';
+import { Separator } from '@/components/ui/separator';
+import { DataTable } from '@/components/ui/data-table';
+import { ApiList } from '@/components/ui/api-list';
 
-import { ColorColumn, columns } from "./columns";
+import { ColorColumn, columns } from './columns';
 
 export const ColorsClient = ({ data }: { data: ColorColumn[] }) => {
   const router = useRouter();
@@ -29,15 +29,8 @@ export const ColorsClient = ({ data }: { data: ColorColumn[] }) => {
         </Button>
       </div>
       <Separator />
-      <DataTable
-        searchKey="name"
-        columns={columns}
-        data={data}
-      />
-      <Heading
-        title="API"
-        description="API calls for Colors"
-      />
+      <DataTable searchKey="name" columns={columns} data={data} />
+      <Heading title="API" description="API calls for Colors" />
       <Separator />
       <ApiList entityName="colors" entityIdName="colorId" />
     </>

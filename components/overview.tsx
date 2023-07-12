@@ -1,12 +1,6 @@
-"use client"
+'use client';
 
-import {
-  Bar,
-  BarChart,
-  ResponsiveContainer,
-  XAxis,
-  YAxis
-} from "recharts";
+import { Bar, BarChart, ResponsiveContainer, XAxis, YAxis } from 'recharts';
 
 export const Overview = ({ data }: { data: any[] }) => {
   return (
@@ -29,5 +23,5 @@ export const Overview = ({ data }: { data: any[] }) => {
         <Bar dataKey="total" fill="#3498db" radius={[4, 4, 0, 0]} />
       </BarChart>
     </ResponsiveContainer>
-  )
+  );
 };

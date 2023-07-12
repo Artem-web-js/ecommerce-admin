@@ -1,15 +1,12 @@
-"use client"
+'use client';
 
+import React from 'react';
+import { useParams, usePathname } from 'next/navigation';
 
-import React from "react";
-import { useParams, usePathname } from "next/navigation";
+import { cn } from '@/lib/utils';
+import Link from 'next/link';
 
-import { cn } from "@/lib/utils";
-import Link from "next/link";
-
-export const MainNav = ({
-  className,
-}: React.HTMLAttributes<HTMLElement>) => {
+export const MainNav = ({ className }: React.HTMLAttributes<HTMLElement>) => {
   const pathname = usePathname();
   const params = useParams();
 
@@ -57,16 +54,16 @@ export const MainNav = ({
   ];
 
   return (
-    <nav
-      className={cn("flex items-center space-x-4 lg:space-x-6", className)}
-    >
+    <nav className={cn('flex items-center space-x-4 lg:space-x-6', className)}>
       {routes.map((route) => (
         <Link
           key={route.href}
           href={route.href}
           className={cn(
             'text-sm font-medium transition-colors hover:text-primary',
-            route.active ? 'text-black dark:text-white' : 'text-muted-foreground'
+            route.active
+              ? 'text-black dark:text-white'
+              : 'text-muted-foreground',
           )}
         >
           {route.label}

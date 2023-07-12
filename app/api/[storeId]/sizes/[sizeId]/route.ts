@@ -1,11 +1,11 @@
-import { auth } from "@clerk/nextjs";
-import { NextResponse } from "next/server";
+import { auth } from '@clerk/nextjs';
+import { NextResponse } from 'next/server';
 
-import prismadb from "@/lib/prismadb";
+import prismadb from '@/lib/prismadb';
 
 export async function GET(
   req: Request,
-  { params }: { params: { sizeId: string } }
+  { params }: { params: { sizeId: string } },
 ) {
   try {
     if (!params.sizeId) {
@@ -27,7 +27,7 @@ export async function GET(
 
 export async function PATCH(
   req: Request,
-  { params }: { params: { storeId: string; sizeId: string } }
+  { params }: { params: { storeId: string; sizeId: string } },
 ) {
   try {
     const { userId } = auth();
@@ -55,11 +55,11 @@ export async function PATCH(
       where: {
         id: params.storeId,
         userId,
-      }
+      },
     });
 
     if (!storeByUserId) {
-      return new NextResponse("Unauthorized", { status: 403 });
+      return new NextResponse('Unauthorized', { status: 403 });
     }
 
     const size = await prismadb.size.updateMany({
@@ -81,7 +81,7 @@ export async function PATCH(
 
 export async function DELETE(
   req: Request,
-  { params }: { params: { storeId: string; sizeId: string } }
+  { params }: { params: { storeId: string; sizeId: string } },
 ) {
   try {
     const { userId } = auth();
@@ -98,11 +98,11 @@ export async function DELETE(
       where: {
         id: params.storeId,
         userId,
-      }
+      },
     });
 
     if (!storeByUserId) {
-      return new NextResponse("Unauthorized", { status: 403 });
+      return new NextResponse('Unauthorized', { status: 403 });
     }
 
     const size = await prismadb.size.delete({

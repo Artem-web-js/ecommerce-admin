@@ -1,11 +1,11 @@
-import { auth } from "@clerk/nextjs";
-import { NextResponse } from "next/server";
+import { auth } from '@clerk/nextjs';
+import { NextResponse } from 'next/server';
 
-import prismadb from "@/lib/prismadb";
+import prismadb from '@/lib/prismadb';
 
 export async function GET(
   req: Request,
-  { params }: { params: { categoryId: string } }
+  { params }: { params: { categoryId: string } },
 ) {
   try {
     if (!params.categoryId) {
@@ -18,7 +18,7 @@ export async function GET(
       },
       include: {
         billboard: true,
-      }
+      },
     });
 
     return NextResponse.json(category);
@@ -30,7 +30,7 @@ export async function GET(
 
 export async function PATCH(
   req: Request,
-  { params }: { params: { storeId: string; categoryId: string } }
+  { params }: { params: { storeId: string; categoryId: string } },
 ) {
   try {
     const { userId } = auth();
@@ -58,11 +58,11 @@ export async function PATCH(
       where: {
         id: params.storeId,
         userId,
-      }
+      },
     });
 
     if (!storeByUserId) {
-      return new NextResponse("Unauthorized", { status: 403 });
+      return new NextResponse('Unauthorized', { status: 403 });
     }
 
     const category = await prismadb.category.updateMany({
@@ -84,7 +84,7 @@ export async function PATCH(
 
 export async function DELETE(
   req: Request,
-  { params }: { params: { storeId: string; categoryId: string } }
+  { params }: { params: { storeId: string; categoryId: string } },
 ) {
   try {
     const { userId } = auth();
@@ -101,11 +101,11 @@ export async function DELETE(
       where: {
         id: params.storeId,
         userId,
-      }
+      },
     });
 
     if (!storeByUserId) {
-      return new NextResponse("Unauthorized", { status: 403 });
+      return new NextResponse('Unauthorized', { status: 403 });
     }
 
     const category = await prismadb.category.delete({

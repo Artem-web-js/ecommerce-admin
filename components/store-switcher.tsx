@@ -1,23 +1,19 @@
-"use client"
+'use client';
 
-import React, {useState} from "react";
-import { Store } from "@prisma/client";
-import { useParams, useRouter } from "next/navigation";
-import {
-  Check,
-  ChevronsUpDown, PlusCircle,
-  StoreIcon
-} from "lucide-react";
+import React, { useState } from 'react';
+import { Store } from '@prisma/client';
+import { useParams, useRouter } from 'next/navigation';
+import { Check, ChevronsUpDown, PlusCircle, StoreIcon } from 'lucide-react';
 
-import { cn } from "@/lib/utils";
+import { cn } from '@/lib/utils';
 
 import {
   Popover,
   PopoverContent,
-  PopoverTrigger
-} from "@/components/ui/popover";
-import { useStoreModal } from "@/hooks/use-store-modal";
-import {Button} from "@/components/ui/button";
+  PopoverTrigger,
+} from '@/components/ui/popover';
+import { useStoreModal } from '@/hooks/use-store-modal';
+import { Button } from '@/components/ui/button';
 import {
   Command,
   CommandEmpty,
@@ -25,10 +21,12 @@ import {
   CommandInput,
   CommandItem,
   CommandList,
-  CommandSeparator
-} from "@/components/ui/command";
+  CommandSeparator,
+} from '@/components/ui/command';
 
-type PopoverTriggerProps = React.ComponentPropsWithoutRef<typeof PopoverTrigger>;
+type PopoverTriggerProps = React.ComponentPropsWithoutRef<
+  typeof PopoverTrigger
+>;
 
 interface StoreSwitcherProps extends PopoverTriggerProps {
   items: Store[];
@@ -49,12 +47,14 @@ export default function StoreSwitcher({
     value: item.id,
   }));
 
-  const currentStore = formattedItems.find((item) => item.value === params.storeId);
+  const currentStore = formattedItems.find(
+    (item) => item.value === params.storeId,
+  );
 
   const onStoreSelect = (store: { value: string; label: string }) => {
     setOpen(false);
     router.push(`/${store.value}`);
-  }
+  };
 
   return (
     <Popover open={open} onOpenChange={setOpen}>
@@ -65,7 +65,7 @@ export default function StoreSwitcher({
           role="combobox"
           aria-expanded={open}
           aria-label="Select a store"
-          className={cn("w-[200px] justify-between", className)}
+          className={cn('w-[200px] justify-between', className)}
         >
           <StoreIcon className="mr-2 h-4 w-4" />
           {currentStore?.label}
@@ -88,10 +88,10 @@ export default function StoreSwitcher({
                   {store.label}
                   <Check
                     className={cn(
-                      "ml-auto h-4 w-4",
+                      'ml-auto h-4 w-4',
                       currentStore?.value === store.value
-                        ? "opacity-100"
-                        : "opacity-0"
+                        ? 'opacity-100'
+                        : 'opacity-0',
                     )}
                   />
                 </CommandItem>
@@ -116,4 +116,4 @@ export default function StoreSwitcher({
       </PopoverContent>
     </Popover>
   );
-};
+}

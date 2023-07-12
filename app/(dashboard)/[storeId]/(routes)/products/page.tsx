@@ -1,17 +1,13 @@
-import { format } from "date-fns";
+import { format } from 'date-fns';
 
-import prismadb from "@/lib/prismadb";
+import prismadb from '@/lib/prismadb';
 
-import { ProductColumn } from "./components/columns";
-import { ProductClient } from "./components/client";
+import { ProductColumn } from './components/columns';
+import { ProductClient } from './components/client';
 
-import { formatter } from "@/lib/utils";
+import { formatter } from '@/lib/utils';
 
-const ProductsPage = async ({
-  params
-}: {
-  params: { storeId: string }
-}) => {
+const ProductsPage = async ({ params }: { params: { storeId: string } }) => {
   const products = await prismadb.product.findMany({
     where: {
       storeId: params.storeId,
@@ -35,7 +31,7 @@ const ProductsPage = async ({
     category: item.category.name,
     size: item.size.name,
     color: item.color.value,
-    createdAt: format(item.createdAt, "MMMM do, yyyy"),
+    createdAt: format(item.createdAt, 'MMMM do, yyyy'),
   }));
 
   return (
